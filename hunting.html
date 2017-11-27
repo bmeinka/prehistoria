@@ -2,10 +2,43 @@
 <html>
 	<head>
 		<title>Prehistoria Hunting Roller</title>
+		<link rel="stylesheet" href="style.css" />
 		<script src="hunting.js"></script>
 	</head>
 	<body>
-		<p id="result"></p>
+		<form id="player">
+			<div id="player-info">
+				<h3>Player Information</h3>
+				Player: <input id="player" /><br />
+				Thumbnail: <input id="thumb" />
+			</div>
+			<div>
+				<h3>Deity Blessing</h3>
+				Blessing of:
+				<select id="deity-blessing">
+					<option value="none"></option>
+					<option value="umbru">Umbru</option>
+					<option value="hasswei">Hasswei</option>
+					<option value="mamota">Mamota</option>
+				</select>
+			</div>
+			<div id="primal-abilities">
+				<h3>Primal Abilities</h3>
+				First:<br />
+				Second:<br />
+				Third:<br />
+			</div>
+		</form>
+		<!-- deity blessing -->
 		<button onclick="roll();">Roll</button>
+		<textarea id="result" rows="10" cols="100"></textarea>
 	</body>
 </html>
+<!--
+	each beast can have multiple Tack items and companions
+	each beast can have up to three (3) Primal Abilities
+	each beast can have multiple Traits
+	each beast can have only one (1) Deity Blessing
+
+	Beads are currency
+-->
