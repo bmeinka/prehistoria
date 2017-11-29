@@ -1,44 +1,52 @@
 <!doctype html>
-<html>
-	<head>
-		<title>Prehistoria Hunting Roller</title>
-		<link rel="stylesheet" href="style.css" />
-		<script src="hunting.js"></script>
-	</head>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Prehistoria Hunting Roller</title>
+<link rel="stylesheet" href="style.css" />
+<script src="hunting_data.js"></script>
+<script src="hunting.js"></script>
+</head>
 	<body>
-		<form id="player">
-			<div id="player-info">
-				<h3>Player Information</h3>
-				Player: <input id="player" /><br />
-				Thumbnail: <input id="thumb" />
-			</div>
-			<div>
-				<h3>Deity Blessing</h3>
-				Blessing of:
-				<select id="deity-blessing">
-					<option value="none"></option>
-					<option value="umbru">Umbru</option>
-					<option value="hasswei">Hasswei</option>
-					<option value="mamota">Mamota</option>
-				</select>
-			</div>
-			<div id="primal-abilities">
-				<h3>Primal Abilities</h3>
-				First:<br />
-				Second:<br />
-				Third:<br />
-			</div>
-		</form>
-		<!-- deity blessing -->
-		<button onclick="roll();">Roll</button>
-		<textarea id="result" rows="10" cols="100"></textarea>
-	</body>
-</html>
-<!--
-	each beast can have multiple Tack items and companions
-	each beast can have up to three (3) Primal Abilities
-	each beast can have multiple Traits
-	each beast can have only one (1) Deity Blessing
+<h3>Player Information</h3>
+Conditions:
+<div><input name="condition" type="checkbox" value="night">Night</input></div>
+<div><input name="condition" type="checkbox" value="snow">Snow</input></div>
+<div><input name="condition" type="checkbox" value="forest">Forest</input></div>
 
-	Beads are currency
--->
+<h3>Deity Blessing</h3>
+Blessing of:
+<select name="blessing">
+<option value="none"></option>
+<option value="umbru">Umbru</option>
+<option value="hasswei">Hasswei</option>
+<option value="mamota">Mamota</option>
+</select>
+
+<h3>Primal Abilities</h3>
+<div><input name="primal" type="checkbox" onchange="primal_limit();" value="queens_love">Queens Love</input></div>
+<div><input name="primal" type="checkbox" onchange="primal_limit();" value="night_fall">Night Fall</input></div>
+<div><input name="primal" type="checkbox" onchange="primal_limit();" value="sun_chaser">Sun Chaser</input></div>
+<div><input name="primal" type="checkbox" onchange="primal_limit();" value="snow_wanderer">Snow Wanderer</input></div>
+<div><input name="primal" type="checkbox" onchange="primal_limit();" value="plains_prowler">Plains Prowler</input></div>
+<div><input name="primal" type="checkbox" onchange="primal_limit();" value="protector_of_the_forest">Protector of the Forest</input></div>
+
+<h3>Traits</h3>
+
+<h3>Tack</h3>
+<div><input name="tack" type="checkbox" value="claw_of_the_great_hunt">Claw of the Great Hunt</input></div>
+<div><input name="tack" type="checkbox" value="horn_of_beasts">Horn of Beasts</input></div>
+<div><input name="tack" type="checkbox" value="sharpened_spear">Sharpened Spear</input></div>
+<div><input name="tack" type="checkbox" value="hide_wrapped_quiver">Hide Wrapped Quiver</input></div>
+<div><input name="tack" type="checkbox" value="hyaenodon">Hyaenodon</input></div>
+<div><input name="tack" type="checkbox" value="dodo">Dodo</input></div>
+<div><input name="tack" type="checkbox" value="pygmy_onyc">Pygmy Onyc</input></div>
+<div><input name="tack" type="checkbox" value="umbrus_familiar">Umbru's Familiar</input></div>
+<div><input name="tack" type="checkbox" value="spectral_trilobite">Spectral Trilobite</input></div>
+<div><input name="tack" type="checkbox" value="black_cat">Black Cat</input></div>
+
+<h3></h3>
+<button onclick="roll();">Roll</button>
+<textarea id="result" rows="10" cols="100"></textarea>
+</body>
+</html>
