@@ -1,52 +1,90 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Prehistoria Hunting Roller</title>
-<link rel="stylesheet" href="style.css" />
-<script src="hunting_data.js"></script>
-<script src="hunting.js"></script>
-</head>
-	<body>
-<h3>Player Information</h3>
-Conditions:
-<div><input name="condition" type="checkbox" value="night">Night</input></div>
-<div><input name="condition" type="checkbox" value="snow">Snow</input></div>
-<div><input name="condition" type="checkbox" value="forest">Forest</input></div>
-
-<h3>Deity Blessing</h3>
-Blessing of:
-<select name="blessing">
-<option value="none"></option>
-<option value="umbru">Umbru</option>
-<option value="hasswei">Hasswei</option>
-<option value="mamota">Mamota</option>
-</select>
-
-<h3>Primal Abilities</h3>
-<div><input name="primal" type="checkbox" onchange="primal_limit();" value="queens_love">Queens Love</input></div>
-<div><input name="primal" type="checkbox" onchange="primal_limit();" value="night_fall">Night Fall</input></div>
-<div><input name="primal" type="checkbox" onchange="primal_limit();" value="sun_chaser">Sun Chaser</input></div>
-<div><input name="primal" type="checkbox" onchange="primal_limit();" value="snow_wanderer">Snow Wanderer</input></div>
-<div><input name="primal" type="checkbox" onchange="primal_limit();" value="plains_prowler">Plains Prowler</input></div>
-<div><input name="primal" type="checkbox" onchange="primal_limit();" value="protector_of_the_forest">Protector of the Forest</input></div>
-
-<h3>Traits</h3>
-
-<h3>Tack</h3>
-<div><input name="tack" type="checkbox" value="claw_of_the_great_hunt">Claw of the Great Hunt</input></div>
-<div><input name="tack" type="checkbox" value="horn_of_beasts">Horn of Beasts</input></div>
-<div><input name="tack" type="checkbox" value="sharpened_spear">Sharpened Spear</input></div>
-<div><input name="tack" type="checkbox" value="hide_wrapped_quiver">Hide Wrapped Quiver</input></div>
-<div><input name="tack" type="checkbox" value="hyaenodon">Hyaenodon</input></div>
-<div><input name="tack" type="checkbox" value="dodo">Dodo</input></div>
-<div><input name="tack" type="checkbox" value="pygmy_onyc">Pygmy Onyc</input></div>
-<div><input name="tack" type="checkbox" value="umbrus_familiar">Umbru's Familiar</input></div>
-<div><input name="tack" type="checkbox" value="spectral_trilobite">Spectral Trilobite</input></div>
-<div><input name="tack" type="checkbox" value="black_cat">Black Cat</input></div>
-
-<h3></h3>
-<button onclick="roll();">Roll</button>
-<textarea id="result" rows="10" cols="100"></textarea>
-</body>
+<html>
+  <head>
+    <title>Prehistoria Hunting Roller</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="hunting_ui.js"></script>
+    <script src="hunting_data.js"></script>
+    <script src="hunting.js"></script>
+  </head>
+  <body>
+    <textarea id="result" rows="10" cols="100"></textarea>
+    <h3>Player Information</h3>
+    <div id="player-info">
+      <div>
+        Name:
+        <input type="text" name="name" />
+        Thumbnail:
+        <input type="text" name="thumb" />
+      </div>
+      <div>
+        Number of Companions:
+        <input type="number" name="companion" min="0" value="0" />
+      </div>
+      <div>
+        Conditions:
+        <input id="condition-night" name="condition" type="checkbox" value="night" />
+        <label for="condition-night">Night</label>
+        <input id="condition-snow" name="condition" type="checkbox" value="snow" />
+        <label for="condition-snow">Snow</label>
+        <input id="condition-forest" name="condition" type="checkbox" value="forest" />
+        <label for="condition-forest">Forest</label>
+      </div>
+    </div>
+    <h3>Deity Blessing</h3>
+    <div id="deity-blessing">
+      Blessing of:
+      <input id="blessing-umbru" name="blessing" type="radio" value="umbru" />
+      <label for="blessing-umbru">Umbru</label>
+      <input id="blessing-hasswei" name="blessing" type="radio" value="hasswei" />
+      <label for="blessing-hasswei">Hasswei</label>
+      <input id="blessing-mamota" name="blessing" type="radio" value="mamota" />
+      <label for="blessing-mamota">Mamota</label>
+      <button onclick="blessing_reset();">None</button>
+    </div>
+    <h3>Primal Abilities</h3>
+    <div id="primal-abilities">
+      <input id="primal-queens-love" name="primal" type="checkbox" onchange="primal_limit();" value="queens_love" />
+      <label for="primal-queens-love">Queens Love</label>
+      <input id="primal-night-fall" name="primal" type="checkbox" onchange="primal_limit();" value="night_fall" />
+      <label for="primal-night-fall">Night Fall</label>
+      <input id="primal-sun-chaser" name="primal" type="checkbox" onchange="primal_limit();" value="sun_chaser" />
+      <label for="primal-sun-chaser">Sun Chaser</label>
+      <input id="primal-snow-wanderer" name="primal" type="checkbox" onchange="primal_limit();" value="snow_wanderer" />
+      <label for="primal-snow-wanderer">Snow Wanderer</label>
+      <input id="primal-plains-prowler" name="primal" type="checkbox" onchange="primal_limit();" value="plains_prowler" />
+      <label for="primal-plains-prowler">Plains Prowler</label>
+      <input id="primal-protector-of-the-forest" name="primal" type="checkbox" onchange="primal_limit();" value="protector_of_the_forest" />
+      <label for="primal-protector-of-the-forest">Protector of the Forest</label>
+    </div>
+    <h3>Traits</h3>
+    <div id="traits">
+    </div>
+    <!-- TODO add traits -->
+    <h3>Tack</h3>
+    <div id="tack">
+      <input id="tack-claw-of-the-great-hunt" name="tack" type="checkbox" value="claw_of_the_great_hunt" />
+      <label for="tack-claw-of-the-great-hunt">Claw of the Great Hunt</label>
+      <input id="tack-horn-of-beasts" name="tack" type="checkbox" value="horn_of_beasts" />
+      <label for="tack-horn-of-beasts">Horn of Beasts</label>
+      <input id="tack-sharpened-spear" name="tack" type="checkbox" value="sharpened_spear" />
+      <label for="tack-sharpened-spear">Sharpened Spear</label>
+      <input id="tack-hide-wrapped-quiver" name="tack" type="checkbox" value="hide_wrapped_quiver" />
+      <label for="tack-hide-wrapped-quiver">Hide Wrapped Quiver</label>
+      <input id="tack-hyaenodon" name="tack" type="checkbox" value="hyaenodon" />
+      <label for="tack-hyaenodon">Hyaenodon</label>
+      <input id="tack-dodo" name="tack" type="checkbox" value="dodo" />
+      <label for="tack-dodo">Dodo</label>
+      <input id="tack-pygmy-onyc" name="tack" type="checkbox" value="pygmy_onyc" />
+      <label for="tack-pygmy-onyc">Pygmy Onyc</label>
+      <input id="tack-umbrus-familiar" name="tack" type="checkbox" value="umbrus_familiar" />
+      <label for="tack-umbrus-familiar">Umbru's Familiar</label>
+      <input id="tack-spectral-trilobite" name="tack" type="checkbox" value-"spectral_trilobite" />
+      <label for="tack-spectral-trilobite">Spectral Trilobite</label>
+      <input id="tack-black-cat" name="tack" type="checkbox" value="black_cat" />
+      <label for="tack-black-cat">Black Cat</label>
+    </div>
+    <button onclick="roll();">Roll</button>
+  </body>
 </html>

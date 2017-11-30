@@ -30,7 +30,7 @@ function get_player_info() {
 	var info = {
 		condition: [],
 		companion: 0,
-		blessing: "none",
+		blessing: [],
 		primal: [],
 		tack: [],
 		valid: function(item) {
@@ -47,12 +47,11 @@ function get_player_info() {
 		}
 	};
 
-	["condition", "primal", "tack"].forEach(function(name) {
+	["condition", "blessing", "primal", "tack"].forEach(function(name) {
 		document.getElementsByName(name).forEach(function(item) {
 			if (item.checked) info[name].push(item.value);
 		});
 	});
-	info.blessing = document.getElementsByName("blessing")[0].selectedOptions[0].value;
 
 	console.log(info);
 	return info;
@@ -69,10 +68,10 @@ function get_player() {
 				this.extra_item.push(v);
 		}
 	};
-	if (info.blessing in data.blessing && info.valid(data.blessing[info.blessing]))
-		player.add_effect(data.blessing[info.blessing]);
+	//if (info.blessing in data.blessing && info.valid(data.blessing[info.blessing]))
+	//	player.add_effect(data.blessing[info.blessing]);
 
-	["primal", "tack"].forEach(function(name) {
+	["blessing", "primal", "tack"].forEach(function(name) {
 		info[name].forEach(function(item) {
 			if (item in data[name] && info.valid(data[name][item]))
 				player.add_effect(data[name][item]);
@@ -88,23 +87,6 @@ function get_player() {
 
 function get_output(player, loot) {
 	return "TODO: Format Output";
-}
-
-function primal_limit() {
-	var n = 0;
-	var primals = document.getElementsByName("primal");
-	primals.forEach(function(item) {
-		item.disabled = false;
-		if (item.checked) n++;
-	});
-	if (n > 3) {
-		primals.forEach(function(item) { item.checked = false; });
-	} else if (n == 3) {
-		primals.forEach(function(item) {
-			if (!item.checked)
-				item.disabled = true;
-		});
-	}
 }
 
 function roll() {
