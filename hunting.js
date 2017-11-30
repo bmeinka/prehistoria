@@ -41,7 +41,7 @@ function get_player_info() {
 		value: function(effect) {
 			if ("companion" in effect) {
 				if (effect.companion) return effect.value * this.companion;
-				else return 0;
+				else if (this.companion > 0) return 0;
 			}
 			return effect.value;
 		}
