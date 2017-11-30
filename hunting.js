@@ -28,29 +28,24 @@ function get_loot(player) {
 
 function get_player_info() {
 	var info = {
-		conditions: [],
+		condition: [],
 		blessing: "none",
 		primal: [],
 		tack: [],
 		valid: function(item) {
 			if ("requires" in item)
-				return this.conditions.includes(item.requires);
+				return this.condition.includes(item.requires);
 			return true;
 		}
 	};
 
-	document.getElementsByName("condition").forEach(function(item) {
-		if (item.checked) info.conditions.push(item.value);
+	["condition", "primal", "tack"].forEach(function(name) {
+		document.getElementsByName(name).forEach(function(item) {
+			if (item.checked) info[name].push(item.value);
+		});
 	});
 	info.blessing = document.getElementsByName("blessing")[0].selectedOptions[0].value;
 
-	document.getElementsByName("primal").forEach(function(item) {
-		if (item.checked) info.primal.push(item.value);
-	});
-
-	document.getElementsByName("tack").forEach(function(item) {
-		if (item.checked) info.tack.push(item.value);
-	});
 	console.log(info);
 	return info;
 }
@@ -58,6 +53,7 @@ function get_player_info() {
 function get_player() {
 	var info = get_player_info();
 	var player = {
+		companion: 0,
 		extra_item: [],
 		add_effect: function(effect) {
 			if ("extra_item" in effect) {
@@ -65,19 +61,18 @@ function get_player() {
 			}
 		}
 	};
-	// TODO companion count
 	if (info.blessing in data.blessing && info.valid(data.blessing[info.blessing]))
 		player.add_effect(data.blessing[info.blessing]);
 
-	info.primal.forEach(function(item) {
-		if (item in data.primal && info.valid(data.primal[item]))
-			player.add_effect(data.primal[item]);
+	["primal", "tack"].forEach(function(name) {
+		info[name].forEach(function(item) {
+			if (item in data[name] && info.valid(data[name][item]))
+				player.add_effect(data[name][item]);
+		});
 	});
 
-	info.tack.forEach(function(item) {
-		if (item in data.tack && info.valid(data.tack[item]))
-			player.add_effect(data.tack[item]);
-	});
+	// TODO companion count
+	// TODO: traits
 
 	console.log(player);
 	return player;
