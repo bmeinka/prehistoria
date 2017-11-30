@@ -29,6 +29,7 @@ function get_loot(player) {
 function get_player_info() {
 	var info = {
 		condition: [],
+		companion: 0,
 		blessing: "none",
 		primal: [],
 		tack: [],
@@ -36,6 +37,13 @@ function get_player_info() {
 			if ("requires" in item)
 				return this.condition.includes(item.requires);
 			return true;
+		},
+		value: function(effect) {
+			if ("companion" in effect) {
+				if (effect.companion) return effect.value * this.companion;
+				else return 0;
+			}
+			return effect.value;
 		}
 	};
 
@@ -56,9 +64,9 @@ function get_player() {
 		companion: 0,
 		extra_item: [],
 		add_effect: function(effect) {
-			if ("extra_item" in effect) {
-				this.extra_item.push(effect.extra_item);
-			}
+			var v = info.value(effect);
+			if (effect.effect == "extra_item")
+				this.extra_item.push(v);
 		}
 	};
 	if (info.blessing in data.blessing && info.valid(data.blessing[info.blessing]))
