@@ -7,7 +7,7 @@ var data = {
 		umbru: { requires: "night", effect: "extra_item", value: 0.50 },
 	},
 	primal: {
-		sun_chaser: { effect: "extra_item", value: 0.10, companion: true },
+		sun_chaser: { effect: "extra_item", value: 0.10, companion: "multiply" },
 	},
 	tack: {
 		umbrus_familiar: { effect: "extra_item", value: 1.00 },

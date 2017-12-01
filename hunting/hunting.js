@@ -40,12 +40,18 @@ function get_player_info() {
 		},
 		value: function(effect) {
 			if ("companion" in effect) {
-				if (effect.companion) return effect.value * this.companion;
-				else if (this.companion > 0) return 0;
+				if (effect.companion == "multiply")
+					return effect.value * this.companion;
+				if (effect.companion == "include")
+					return effect.value * (this.companion + 1);
+				if (effect.companion == "negate")
+					if (this.companion > 0) return 0;
 			}
 			return effect.value;
 		}
 	};
+
+	info.companion = parseInt(document.getElementsByName("companion")[0].value);
 
 	["condition", "blessing", "primal", "tack"].forEach(function(name) {
 		document.getElementsByName(name).forEach(function(item) {
@@ -60,7 +66,6 @@ function get_player_info() {
 function get_player() {
 	var info = get_player_info();
 	var player = {
-		companion: 0,
 		extra_item: [],
 		add_effect: function(effect) {
 			var v = info.value(effect);
