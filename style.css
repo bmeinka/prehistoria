@@ -1,3 +1,17 @@
-#result { float: right; display: block; }
 body { line-height: 2.0em; }
-div { width: 50%; }
+#result, #roll {
+	display: block;
+	float: right;
+	width: 100%;
+}
+.section {
+	width: 49%;
+	display: inline;
+	float: left;
+}
+#input, #output {
+	width: 50%;
+	display: inline;
+}
+#input { float: left; }
+#output { float: right; }
