@@ -129,6 +129,8 @@ function get_player() {
 				this.extra_item.push(v);
 			if (effect.effect == "not_common")
 				this.rates.not_common += v;
+			if (effect.effect == "rare")
+				this.rates.rare += v;
 		}
 	};
 
