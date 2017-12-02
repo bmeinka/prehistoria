@@ -31,7 +31,7 @@ var data = {
 		loner: { effect: "not_common", value: 0.10, companion: "negate" },
 		quick_learner: {},
 		treasure_hunter: {},
-		legendary_resilience: {},
+		legendary_resilience: { effect: "not_common", value: 0.05 },
 	},
 	tack: {
 		claw_of_the_great_hunt: { effect: "not_common", value: 0.05 },
