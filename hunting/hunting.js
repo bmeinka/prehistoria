@@ -1,3 +1,8 @@
+function log_roll(what_for, chance) {
+	var chance_percent = Math.floor(chance * 100);
+	console.log("Rolling for " + what_for + " with a " + chance_percent + "% chance");
+}
+
 function rng() {
 	var n = Math.random();
 	console.log("Rolled " + Math.floor(n * 100));
@@ -10,7 +15,7 @@ function get_num_items(player) {
 	var n = Math.floor(rng() * item_count.max) + item_count.min;
 	console.log("Got " + n + " items");
 	player.extra_item.forEach(function(item, index, arr) {
-		console.log("Rolling for an extra item with a " + item * 100 + "% chance");
+		log_roll("an extra item", item);
 		if (rng() > (1.00 - item)) {
 			console.log("Got an extra item");
 			n++;
@@ -20,18 +25,62 @@ function get_num_items(player) {
 	return n;
 }
 
+function get_common_item(player) {
+	var chance = 1.00;
+	["encounter", "exotic", "rare", "uncommon", "not_common"].forEach(function(i) {
+		chance -= player.rates[i];
+	});
+	log_roll("a common item", chance);
+	return (rng() < chance)
+}
+
+function get_uncommon_item(player) {
+	var chosen_type = false;
+	var total = 0;
+	var types = ["encounter", "exotic", "rare", "uncommon"];
+	types.forEach(function(i) {
+		total += player.rates[i];
+	});
+	console.log("Rolling for rarer item type");
+	var r = rng() * total;
+	types.forEach(function(type) {
+		if (!chosen_type) {
+			if (r > (total - player.rates[type]))
+				chosen_type = type;
+			else
+				total -= player.rates[type];
+		}
+	});
+	return chosen_type;
+}
+
+function get_item_type(player) {
+	var type = "unknown";
+	if (get_common_item(player))
+		type = "common";
+	else {
+		type = get_uncommon_item(player);
+	}
+	console.log("got a(n) " + type + " item");
+	return type;
+}
+
 function get_loot(player) {
 	var loot = {items: [], encounters: []};
 	var item_count = get_num_items(player);
+	for (var i = 0; i < item_count; ++i) {
+		loot.items.push(get_item_type(player));
+	}
 	return loot;
 }
 
 function get_player_info() {
 	var info = {
-		condition: [],
 		companion: 0,
+		condition: [],
 		blessing: [],
 		primal: [],
+		trait: [],
 		tack: [],
 		valid: function(item) {
 			if ("requires" in item)
@@ -53,7 +102,7 @@ function get_player_info() {
 
 	info.companion = parseInt(document.getElementsByName("companion")[0].value);
 
-	["condition", "blessing", "primal", "tack"].forEach(function(name) {
+	["condition", "blessing", "primal", "trait", "tack"].forEach(function(name) {
 		document.getElementsByName(name).forEach(function(item) {
 			if (item.checked) info[name].push(item.value);
 		});
@@ -67,31 +116,39 @@ function get_player() {
 	var info = get_player_info();
 	var player = {
 		extra_item: [],
+		rates: {
+			encounter: data.base_rates.encounter,
+			exotic: data.base_rates.exotic,
+			rare: data.base_rates.rare,
+			uncommon: data.base_rates.uncommon,
+			not_common: 0.00
+		},
 		add_effect: function(effect) {
 			var v = info.value(effect);
 			if (effect.effect == "extra_item")
 				this.extra_item.push(v);
+			if (effect.effect == "not_common")
+				this.rates.not_common += v;
 		}
 	};
-	//if (info.blessing in data.blessing && info.valid(data.blessing[info.blessing]))
-	//	player.add_effect(data.blessing[info.blessing]);
 
-	["blessing", "primal", "tack"].forEach(function(name) {
+	["blessing", "primal", "trait", "tack"].forEach(function(name) {
 		info[name].forEach(function(item) {
 			if (item in data[name] && info.valid(data[name][item]))
 				player.add_effect(data[name][item]);
 		});
 	});
 
-	// TODO companion count
-	// TODO: traits
-
 	console.log(player);
 	return player;
 }
 
 function get_output(player, loot) {
-	return "TODO: Format Output";
+	var out = "";
+	loot.items.forEach(function(item) {
+		out += ":" + item + ":";
+	});
+	return out;
 }
 
 function roll() {
